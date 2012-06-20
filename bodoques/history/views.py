@@ -65,7 +65,7 @@ def user_time(request):
         
         data = {'timeLeft': allowed}
     else:
-        data = {'timeLeft': float('Infinity')}
+        data = {'timeLeft': 'Infinity'}
     
     return render_json(request, data)
 
