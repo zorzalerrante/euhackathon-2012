@@ -68,8 +68,6 @@ def user_time(request):
     if url:
         curr_site, created = Site.objects.get_or_create(url=url)
         
-        allowed = 
-        
         time_factor = 1
         if curr_site.score < 0:
             time_factor = 0.5
