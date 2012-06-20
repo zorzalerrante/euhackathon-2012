@@ -68,14 +68,15 @@ def user_time(request):
     if url:
         curr_site, created = Site.objects.get_or_create(url=url)
         
-        allowed = user.allowed_time
+        allowed = 
         
+        time_factor = 1
         if curr_site.score < 0:
-            allowed = allowed / 2
+            time_factor = 0.5
         
-        data = {'userId': user.uid, 'timeLeft': allowed, 'currentSiteType': curr_site.score}
+        data = {'userId': user.uid, 'timeLeft': user.allowed_time, 'currentSiteType': curr_site.score, 'timeFactor': time_factor}
     else:
-        data = {'userId': user.uid, 'timeLeft': 'Infinity', 'currentSiteType': None}
+        data = {'userId': user.uid, 'timeLeft': 'Infinity', 'currentSiteType': None, 'timeFactor': 1}
     
     return render_json(request, data)
 
