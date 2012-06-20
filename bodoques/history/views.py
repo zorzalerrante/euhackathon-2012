@@ -30,7 +30,7 @@ def add_user_time(request):
         user.allowed_time += time
         user.save()
         
-    return render_json(request, {'userId': user.uid, 'allowedTime': user.allowed_time / (60 * 1000)})
+    return render_json(request, {'userId': user.uid, 'allowedTime': user.allowed_time})
     
 def user_time(request):
     user_id = request.GET['userId']
@@ -120,9 +120,13 @@ def user_dash(request, user_id):
     
     data['sites'] = list(user_activities.filter(datetime__gte=start_date).values('site__url', 'site__score').annotate(milliseconds=Sum('seconds')).order_by('-milliseconds')[:10])
     
+    #wip
+    #data['last_activity'] = [{'date': a.datetime.isoformat(), 'minutes': user_activities.select_related().order_by('-datetime')[:20])
+    
     print data
     return render_json(request, data)
-    
-def global_sites(request):
-    most_visited = Site.objects.values('url', 'score').annotate(total_time=Sum('activity__seconds')).exclude(total_time=None).filter(total_time__gt=0)
-    return render_json(request, list(most_visited))
+
+# NOT READY    
+#def global_sites(request):
+#    most_visited = Site.objects.values('url', 'score').annotate(total_time=Sum('activity__seconds')).exclude(total_time=None).filter(total_time__gt=0)
+#    return render_json(request, list(most_visited))
