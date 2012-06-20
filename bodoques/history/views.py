@@ -29,7 +29,11 @@ def user_time(request):
             user_allowed_time = 0
         
         user.save()
+        
+        prev_site = Site.objects.get_or_create(url=prev_url)
             
+        activity = Activity(user=user, site=prev_site, seconds=spent)
+        activity.save()
         
             
     except KeyError:
