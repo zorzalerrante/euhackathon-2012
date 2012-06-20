@@ -125,7 +125,7 @@ def user_dash(request, user_id):
     data['sites'] = list(user_activities.filter(datetime__gte=start_date).values('site__url', 'site__score').annotate(milliseconds=Sum('seconds')).order_by('-milliseconds')[:10])
     
     #wip
-    #data['last_activity'] = [{'date': a.datetime.isoformat(), 'minutes': user_activities.select_related().order_by('-datetime')[:20])
+    data['last_activity'] = [{'date': a.datetime.isoformat(), 'minutes': a.seconds / (60 * 1000), 'url': a.site.url} for a in user_activities.select_related().order_by('-datetime')[:20]]
     
     print data
     return render_json(request, data)
