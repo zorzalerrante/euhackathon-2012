@@ -17,8 +17,12 @@ def add_user_time(request):
     user_id = request.GET['userId']
     user = get_object_or_404(User, uid=user_id)
     
-    user.allowed_time += int(request.GET['additionalTime'])
-    user.save()
+    time = int(request.GET['additionalTime'])
+    
+    if time != 0:
+        user.allowed_time += time
+        user.save()
+        
     return render_json(request, {'userId': user.uid, 'allowedTime': user.allowed_time})
     
 def user_time(request):
