@@ -7,9 +7,10 @@ import os
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^api/time/$', 'history.views.user_time'),
     (r'^api/time/add/$', 'history.views.add_user_time'),
-    (r'^api/dash/(?P<user_id>[\d\w]+)/$', 'history.views.user_dash')
+    (r'^api/time/$', 'history.views.user_time'),
+    (r'^api/dash/(?P<user_id>[\d\w]+)/$', 'history.views.user_dash'),
+    (r'^api/dash/$', 'history.views.global_sites')
     # Examples:
     # url(r'^$', 'bodoques.views.home', name='home'),
     # url(r'^bodoques/', include('bodoques.foo.urls')),
