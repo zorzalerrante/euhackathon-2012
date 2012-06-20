@@ -4,6 +4,8 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+USE_DJANGO_SERVER = True
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
