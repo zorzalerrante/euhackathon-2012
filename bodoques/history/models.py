@@ -7,7 +7,7 @@ class Site(models.Model):
     
 class User(models.Model):
     uid = models.CharField(max_length=255, db_index=True, unique=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, default='')
     allowed_time = models.IntegerField(default=100000)
     
 class Activity(models.Model):
