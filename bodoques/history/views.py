@@ -20,20 +20,20 @@ def user_time(request):
     print request.GET
     
     try:
-        prev_url = request.GET['previousUrl'][0]
+        prev_url = request.GET['previousUrl']
         spent = int(request.GET['previousTimeSpent'])
         
         user.allowed_time -= spent 
         
         if user.allowed_time < 0:
-            user_allowed_time = 0
+            user.allowed_time = 0
         
         user.save()
         
-        prev_site = Site.objects.get_or_create(url=prev_url)
-            
-        activity = Activity(user=user, site=prev_site, seconds=spent)
-        activity.save()
+        if prev_url:
+            prev_site, created = Site.objects.get_or_create(url=prev_url)
+            activity = Activity(user=user, site=prev_site, seconds=spent)
+            activity.save()
         
             
     except KeyError:
