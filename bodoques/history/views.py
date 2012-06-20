@@ -41,8 +41,13 @@ def user_time(request):
     
     try:
         prev_url = get_site_from_url(request.GET['previousUrl'])
-        spent = int(request.GET['previousTimeSpent'])
+        prev_site, created = Site.objects.get_or_create(url=prev_url)
         
+        spent = int(request.GET['previousTimeSpent'])
+                
+        if prev_site.score < 0:
+            spent = spent * 2
+                
         user.allowed_time -= spent 
         
         if user.allowed_time < 0:
@@ -50,8 +55,7 @@ def user_time(request):
         
         user.save()
         
-        if prev_url and spent > 0:
-            prev_site, created = Site.objects.get_or_create(url=prev_url)
+        if spent > 0: 
             activity = Activity(user=user, site=prev_site, seconds=spent)
             activity.save()
             
